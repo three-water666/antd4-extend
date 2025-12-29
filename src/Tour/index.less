@@ -1,8 +1,7 @@
-// 1. 引入 antd v4 变量 (确保路径正确，dumi 会处理 ~ 别名)
+// 1. 引入 antd v4 变量
 @import '~antd/lib/style/themes/default.less';
-// 2. 引入底层组件的基础样式 (rc-tour v1.15+ 不再提供 index.css，样式由 antd 实现)
 
-@tour-prefix-cls: ~'ant-tour';
+@tour-prefix-cls: ~'@{ant-prefix}-tour';
 
 .@{tour-prefix-cls} {
   font-family: @font-family;

@@ -7,7 +7,7 @@ import useMergedState from 'rc-util/lib/hooks/useMergedState';
 import { TourProps } from './interface';
 import zhCN from './locale/zh_CN';
 import enUS from './locale/en_US';
-import './index.less';
+import './style';
 
 const Tour: React.FC<TourProps> = (props) => {
   const {

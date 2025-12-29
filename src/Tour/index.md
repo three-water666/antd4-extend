@@ -1,8 +1,10 @@
 ---
-title: Tour 漫游式引导
-group:
-  title: 数据展示
-  path: /data-display
+title: Tour
+subtitle: 漫游式引导
+nav:
+  title: 组件
+  path: /components
+  order: 2
 ---
 
 # Tour 漫游式引导
