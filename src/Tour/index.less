@@ -1,0 +1,241 @@
+// 1. 引入 antd v4 变量 (确保路径正确，dumi 会处理 ~ 别名)
+@import '~antd/lib/style/themes/default.less';
+// 2. 引入底层组件的基础样式 (rc-tour v1.15+ 不再提供 index.css，样式由 antd 实现)
+
+@tour-prefix-cls: ~'ant-tour';
+
+.@{tour-prefix-cls} {
+  font-family: @font-family;
+  font-size: @font-size-base;
+  line-height: @line-height-base;
+  color: @text-color;
+  z-index: 1001; // 确保在 Modal 之上
+  position: absolute;
+
+  &-mask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1001;
+    pointer-events: none;
+
+    &-placeholder {
+      pointer-events: auto;
+    }
+  }
+
+  &-content {
+    position: relative;
+    z-index: 2;
+    width: 520px;
+    min-height: 50px;
+    max-width: 100vw;
+    background-color: @component-background;
+    border-radius: @border-radius-base * 2;
+    box-shadow: @shadow-2;
+    padding-bottom: 24px;
+    pointer-events: auto; // 确保弹窗内容可以点击
+    
+    // 强制把 box-sizing 设为 border-box，防止外部全局样式污染
+    * {
+      box-sizing: border-box;
+    }
+  }
+
+  &-inner {
+    padding: 24px 24px 0;
+    text-align: left;
+  }
+
+  &-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    color: @text-color-secondary;
+    cursor: pointer;
+    font-size: 16px;
+    transition: color 0.2s;
+
+    &:hover {
+      color: @text-color;
+    }
+  }
+
+  &-cover {
+    margin-top: -24px; // 抵消 inner 的 padding
+    margin-left: -24px;
+    margin-right: -24px;
+    border-top-left-radius: @border-radius-base * 2;
+    border-top-right-radius: @border-radius-base * 2;
+    overflow: hidden;
+    
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &-header {
+    margin-bottom: 12px;
+    margin-top: 24px; // 如果有 cover，这里需要一点间距
+  }
+  
+  // 如果没有 cover，header 的 margin-top 去掉
+  &-cover + &-header {
+    margin-top: 12px;
+  }
+
+  &-title {
+    font-weight: 500; // v5 这里的字重稍微轻一点
+    font-size: 16px;
+    color: @heading-color;
+  }
+
+  &-description {
+    color: @text-color;
+    word-wrap: break-word;
+  }
+
+  &-footer {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &-buttons {
+    display: flex;
+    gap: 8px;
+    
+    .ant-btn {
+      margin-left: 0; // 覆盖可能存在的全局样式
+      & + .ant-btn {
+        margin-left: 8px;
+      }
+    }
+  }
+
+  &-indicators {
+    display: flex;
+    gap: 6px;
+  }
+
+  &-indicator {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: @disabled-color;
+    transition: all 0.2s;
+    cursor: pointer;
+
+    &-active {
+      background-color: @primary-color;
+      transform: scale(1.2);
+    }
+  }
+
+  &-arrow {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    z-index: 1;
+    background: transparent;
+    pointer-events: none;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: @component-background;
+      transform: rotate(45deg);
+    }
+  }
+
+  // 默认居中处理，防止 rc-trigger 未传样式
+  &-placement-top &-arrow,
+  &-placement-bottom &-arrow {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &-placement-left &-arrow,
+  &-placement-right &-arrow {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  &-placement-top &-arrow,
+  &-placement-topLeft &-arrow,
+  &-placement-topRight &-arrow {
+    bottom: -6px;
+    &::before {
+      box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.07);
+    }
+  }
+
+  &-placement-bottom &-arrow,
+  &-placement-bottomLeft &-arrow,
+  &-placement-bottomRight &-arrow {
+    top: -6px;
+    &::before {
+      box-shadow: -2px -2px 5px rgba(0, 0, 0, 0.06);
+    }
+  }
+
+  &-placement-left &-arrow,
+  &-placement-leftTop &-arrow,
+  &-placement-leftBottom &-arrow {
+    right: -6px;
+    &::before {
+      box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.06);
+    }
+  }
+
+  &-placement-right &-arrow,
+  &-placement-rightTop &-arrow,
+  &-placement-rightBottom &-arrow {
+    left: -6px;
+    &::before {
+      box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.06);
+    }
+  }
+
+  // Primary 模式下的箭头颜色
+  &-primary {
+    .@{tour-prefix-cls}-content {
+      background-color: @primary-color;
+      color: #fff;
+    }
+    .@{tour-prefix-cls}-arrow {
+      &::before {
+        background-color: @primary-color;
+      }
+    }
+    .@{tour-prefix-cls}-title,
+    .@{tour-prefix-cls}-description,
+    .@{tour-prefix-cls}-close {
+      color: #fff;
+    }
+    .@{tour-prefix-cls}-indicator {
+      background-color: rgba(255, 255, 255, 0.35);
+      &-active {
+        background-color: #fff;
+      }
+    }
+  }
+}
+
+// 修正遮罩层样式
+.@{tour-prefix-cls}-mask {
+  transition: all 0.3s;
+}
+
+// 兼容底层组件可能使用的类名
+.rc-tour-mask {
+  transition: all 0.3s;
+}

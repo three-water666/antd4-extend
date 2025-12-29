@@ -1,0 +1,9 @@
+src
+docs
+node_modules
+.umi
+.fatherrc.ts
+.umirc.ts
+tsconfig.json
+package-lock.json
+*.md
