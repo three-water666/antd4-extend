@@ -1,9 +1,9 @@
 ---
 title: 快速开始
 nav:
-  title: 指南
+  title: 介绍
   order: 1
-sidemenu: false
+sidebar: false
 ---
 
 # 快速开始

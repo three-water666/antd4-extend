@@ -19,6 +19,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*", ".umirc.ts", ".fatherrc.ts"],
+  "include": ["src/**/*", ".dumirc.ts", ".fatherrc.ts"],
   "exclude": ["node_modules", "lib", "es", "dist", "**/__test__", "test"]
 }

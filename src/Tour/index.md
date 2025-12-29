@@ -3,8 +3,9 @@ title: Tour
 subtitle: 漫游式引导
 nav:
   title: 组件
-  path: /components
   order: 2
+demo:
+  cols: 2
 ---
 
 # Tour 漫游式引导
@@ -155,6 +156,95 @@ export default () => {
 };
 ```
 
+### 不同的位置
+
+通过 `placement` 控制引导卡片的位置。
+
+```tsx
+import React, { useRef, useState } from 'react';
+import { Button } from 'antd';
+import { Tour } from 'antd4-extend';
+
+export default () => {
+  const ref1 = useRef(null);
+  const [open, setOpen] = useState(false);
+
+  const steps = [
+    {
+      title: '上侧',
+      description: '引导卡片在目标元素上侧。',
+      target: () => ref1.current,
+      placement: 'top',
+    },
+    {
+      title: '右侧',
+      description: '引导卡片在目标元素右侧。',
+      target: () => ref1.current,
+      placement: 'right',
+    },
+    {
+      title: '左侧',
+      description: '引导卡片在目标元素左侧。',
+      target: () => ref1.current,
+      placement: 'left',
+    },
+  ];
+
+  return (
+    <>
+      <Button type="primary" onClick={() => setOpen(true)}>
+        查看位置示例
+      </Button>
+      <div style={{ padding: '60px 150px' }}>
+        <Button ref={ref1}>目标元素</Button>
+      </div>
+      <Tour open={open} onClose={() => setOpen(false)} steps={steps} />
+    </>
+  );
+};
+```
+
+### 带图片的引导
+
+通过 `cover` 属性展示图片。
+
+```tsx
+import React, { useRef, useState } from 'react';
+import { Button } from 'antd';
+import { Tour } from 'antd4-extend';
+
+export default () => {
+  const ref1 = useRef(null);
+  const [open, setOpen] = useState(false);
+
+  const steps = [
+    {
+      title: '插画引导',
+      description: '在引导中加入生动的插画。',
+      cover: (
+        <img
+          alt="tour.png"
+          src="https://gw.alipayobjects.com/zos/rmsportal/kdpgvguMpGfqaHPjicRK.svg"
+        />
+      ),
+      target: () => ref1.current,
+    },
+  ];
+
+  return (
+    <>
+      <Button type="primary" onClick={() => setOpen(true)}>
+        显示带图片引导
+      </Button>
+      <Button ref={ref1} style={{ marginLeft: 16 }}>
+        目标按钮
+      </Button>
+      <Tour open={open} onClose={() => setOpen(false)} steps={steps} />
+    </>
+  );
+};
+```
+
 ### 自定义指示器
 
 通过 `indicatorsRender` 自定义指示器。
@@ -207,11 +297,13 @@ export default () => {
 | zIndex | Tour 的层级 | number | 1001 |
 | gap | 控制高亮区域的圆角边框和显示间距 | { offset?: number \| [number, number], radius?: number } | { offset: 6, radius: 2 } |
 | closeIcon | 自定义关闭按钮 | ReactNode | - |
+| disabledInteraction | 禁用高亮区域交互 | boolean | false |
 | locale | 国际化配置 | [TourLocale](#tourlocale) | - |
 | getPopupContainer | 设置 Tour 浮层的渲染节点 | (node: HTMLElement) => HTMLElement | body |
 | onChange | 步骤改变时的回调 | (current: number) => void | - |
 | onClose | 关闭引导时的回调函数 | (current: number) => void | - |
 | onFinish | 引导完成时的回调 | () => void | - |
+| className | 自定义容器类名 | string | - |
 
 ### TourStep
 
