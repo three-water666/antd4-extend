@@ -5,6 +5,7 @@ import { Button, ConfigProvider } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
 import { TourProps } from './interface';
+import { getPlacements } from './placements';
 import zhCN from './locale/zh_CN';
 import enUS from './locale/en_US';
 import './style';
@@ -35,6 +36,10 @@ const Tour: React.FC<TourProps> = (props) => {
 
   const { getPrefixCls, locale } = useContext(ConfigProvider.ConfigContext);
   const prefixCls = getPrefixCls('tour', customPrefixCls);
+
+  const builtinPlacements = getPlacements(
+    typeof arrow === 'object' ? arrow.pointAtCenter : undefined,
+  );
 
   // 合并国际化配置
   const mergedLocale = {
@@ -160,6 +165,7 @@ const Tour: React.FC<TourProps> = (props) => {
       {...restProps}
       open={open}
       prefixCls={prefixCls}
+      builtinPlacements={builtinPlacements}
       steps={steps.map(step => {
         const { target, ...restStep } = step;
         let finalTarget: any = target;
