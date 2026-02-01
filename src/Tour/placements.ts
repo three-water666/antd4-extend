@@ -1,11 +1,11 @@
-import { BuildInPlacements } from '@rc-component/tour';
+// import { BuildInPlacements } from '@rc-component/tour';
 
 const autoAdjustOverflow = {
   adjustX: 1,
   adjustY: 1,
 };
 
-export const getPlacements = (arrowPointAtCenter?: boolean): BuildInPlacements => {
+export const getPlacements = (arrowPointAtCenter?: boolean): any => {
   return {
     left: {
       points: ['cr', 'cl'],
