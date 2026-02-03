@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { ConfigProvider } from 'antd';
 import { getPixelRatio } from './utils';
 import { WatermarkProps } from './interface';
+import './style';
 
 /**
  * Base size of the canvas, 1 for parallel layout and 2 for alternate layout

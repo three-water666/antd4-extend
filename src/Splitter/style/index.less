@@ -1,0 +1,97 @@
+@import '~antd/lib/style/themes/default.less';
+
+@splitter-prefix-cls: ~'@{ant-prefix}-splitter';
+
+.@{splitter-prefix-cls} {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  &-horizontal {
+    flex-direction: row;
+  }
+
+  &-vertical {
+    flex-direction: column;
+  }
+
+  &-panel {
+    overflow: auto;
+    position: relative;
+  }
+
+  &-bar {
+    position: relative;
+    flex: 0 0 6px;
+    background: transparent;
+    transition: background 0.3s;
+    user-select: none;
+    z-index: 10;
+
+    &::after {
+      content: '';
+      position: absolute;
+      background: @border-color-base;
+      transition: background 0.3s;
+    }
+
+    &:hover,
+    &-active {
+      background: rgba(0, 0, 0, 0.05);
+      &::after {
+        background: @primary-color;
+      }
+    }
+
+    &-horizontal {
+      cursor: col-resize;
+      width: 6px;
+      &::after {
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 1px;
+        transform: translateX(-50%);
+      }
+
+      &:hover,
+      &-active {
+        &::after {
+          width: 2px;
+        }
+      }
+    }
+
+    &-vertical {
+      cursor: row-resize;
+      height: 6px;
+      &::after {
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 1px;
+        transform: translateY(-50%);
+      }
+
+      &:hover,
+      &-active {
+        &::after {
+          height: 2px;
+        }
+      }
+    }
+  }
+
+  &-resizing {
+    cursor: col-resize;
+    user-select: none;
+    &.@{splitter-prefix-cls}-vertical {
+      cursor: row-resize;
+    }
+
+    .@{splitter-prefix-cls}-bar::after {
+        background: @primary-color;
+    }
+  }
+}
