@@ -1,0 +1,133 @@
+@import '~antd/lib/style/themes/default.less';
+
+@float-btn-prefix-cls: ~'@{ant-prefix}-float-btn';
+
+.@{float-btn-prefix-cls} {
+  position: fixed;
+  z-index: 99;
+  display: block;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  color: @text-color;
+  line-height: 40px;
+  background-color: @component-background;
+  border: none;
+  border-radius: @border-radius-base;
+  box-shadow: @shadow-2;
+  cursor: pointer;
+  transition: all 0.3s;
+  bottom: 50px;
+  right: 50px;
+
+  &-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: inherit;
+  }
+
+  &-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-icon {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  &-description {
+    font-size: 12px;
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  &-circle {
+    border-radius: 50%;
+  }
+
+  &-square {
+    border-radius: @border-radius-base;
+  }
+
+  &-primary {
+    background-color: @primary-color;
+    color: @text-color-inverse;
+
+    .@{float-btn-prefix-cls}-content {
+      color: @text-color-inverse;
+    }
+
+    &:hover {
+      background-color: @primary-5;
+    }
+  }
+
+  &-default {
+    background-color: @component-background;
+    color: @text-color;
+
+    &:hover {
+      background-color: @background-color-base;
+    }
+  }
+
+  &-badge {
+    width: 100%;
+    height: 100%;
+    .ant-badge-count {
+      z-index: 1;
+    }
+  }
+}
+
+// Group styles
+@float-btn-group-prefix-cls: ~'@{ant-prefix}-float-btn-group';
+
+.@{float-btn-group-prefix-cls} {
+  position: fixed;
+  z-index: 99;
+  bottom: 50px;
+  right: 50px;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 12px;
+
+  &-wrap {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 12px;
+  }
+
+  .@{float-btn-prefix-cls} {
+    position: static;
+  }
+
+  &-hover, &-click {
+    .@{float-btn-group-prefix-cls}-wrap {
+      display: none;
+    }
+
+    &.@{float-btn-group-prefix-cls}-hover-active,
+    &.@{float-btn-group-prefix-cls}-click-active {
+      .@{float-btn-group-prefix-cls}-wrap {
+        display: flex;
+      }
+    }
+  }
+}
+
+// BackTop styles
+.@{ant-prefix}-float-btn-back-top {
+  // Styles for back-top if any specific
+}
