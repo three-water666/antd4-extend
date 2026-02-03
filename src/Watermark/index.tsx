@@ -100,39 +100,56 @@ const Watermark: React.FC<WatermarkProps> = (props) => {
     canvas.setAttribute('height', `${(gapY + height) * BaseSize * ratio}px`);
 
     if (ctx) {
-      // Translate to the center of the canvas
-      ctx.translate(canvasOffsetLeft * ratio, canvasOffsetTop * ratio);
-      ctx.scale(ratio, ratio);
+      const draw = (img?: HTMLImageElement) => {
+        const drawItem = (left: number, top: number) => {
+          ctx.save();
+          ctx.translate(left * ratio, top * ratio);
+          ctx.scale(ratio, ratio);
 
-      const RotateAngle = (rotate * Math.PI) / 180;
-      ctx.rotate(RotateAngle);
+          const RotateAngle = (rotate * Math.PI) / 180;
+          ctx.rotate(RotateAngle);
 
-      // Draw the text
-      if (content) {
-        ctx.font = `${fontStyle} normal ${fontWeight} ${Number(fontSize)}px/${height}px ${fontFamily}`;
-        ctx.fillStyle = color;
-        ctx.textAlign = textAlign;
-        ctx.textBaseline = 'top';
-        
-        const contents = Array.isArray(content) ? content : [content];
-        
-        contents?.forEach((item, index) => {
-          ctx.fillText(item ?? '', 0, index * (Number(fontSize) + FontGap));
-        });
-      }
-      
-      // Draw the image
+          // Draw the text
+          if (content) {
+            ctx.font = `${fontStyle} normal ${fontWeight} ${Number(
+              fontSize,
+            )}px/${height}px ${fontFamily}`;
+            ctx.fillStyle = color;
+            ctx.textAlign = textAlign;
+            ctx.textBaseline = 'top';
+
+            const contents = Array.isArray(content) ? content : [content];
+
+            contents?.forEach((item, index) => {
+              ctx.fillText(item ?? '', 0, index * (Number(fontSize) + FontGap));
+            });
+          } else if (img) {
+            ctx.drawImage(img, -width / 2, -height / 2, width, height);
+          }
+
+          ctx.restore();
+        };
+
+        drawItem(canvasOffsetLeft, canvasOffsetTop);
+        if (BaseSize === 2) {
+          drawItem(
+            canvasOffsetLeft + gapX + width,
+            canvasOffsetTop + gapY + height,
+          );
+        }
+        setBase64Url(canvas.toDataURL());
+      };
+
       if (image) {
         const img = new Image();
         img.crossOrigin = 'anonymous';
         img.referrerPolicy = 'no-referrer';
         img.onload = () => {
-          ctx.drawImage(img, -width / 2, -height / 2, width, height);
-          setBase64Url(canvas.toDataURL());
+          draw(img);
         };
         img.src = image;
       } else {
-        setBase64Url(canvas.toDataURL());
+        draw();
       }
     }
   }, [
